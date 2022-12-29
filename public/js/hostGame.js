@@ -130,7 +130,7 @@ function updateTimer(){
         if(time == 0){
             socket.emit('timeUp');
         }
-    }, 9000);
+    }, 1000);
 }
 socket.on('GameOver', function(data){
     document.getElementById('nextQButton').style.display = "none";
