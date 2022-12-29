@@ -4,7 +4,7 @@ var params = jQuery.deparam(window.location.search); //Gets the id from url
 
 var timer;
 
-var time = 20;
+var time = 30;
 
 //When host connects to server
 socket.on('connect', function() {
@@ -33,13 +33,14 @@ socket.on('updatePlayersAnswered', function(data){
 });
 
 socket.on('questionOver', function(playerData, correct){
-    clearInterval(timer);
+    // clearInterval(timer);
     var answer1 = 0;
     var answer2 = 0;
     var answer3 = 0;
     var answer4 = 0;
     var total = 0;
     //Hide elements on page
+    clearInterval(timer);
     document.getElementById('playersAnswered').style.display = "none";
     document.getElementById('timerText').style.display = "none";
     
@@ -129,7 +130,7 @@ function updateTimer(){
         if(time == 0){
             socket.emit('timeUp');
         }
-    }, 1000);
+    }, 9000);
 }
 socket.on('GameOver', function(data){
     document.getElementById('nextQButton').style.display = "none";
