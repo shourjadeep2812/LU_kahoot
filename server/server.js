@@ -305,6 +305,7 @@ io.on('connection', (socket) => {
                         player.gameData["correctAnswer"] = correctAnswer
                         player.gameData["questionNumber"] = game.gameData.question
                         delete player._id;
+                        // console.log(player)
                         ans_coll.insertOne(player)
                         .then((res)=>{
                             
@@ -333,11 +334,13 @@ io.on('connection', (socket) => {
     });
     
     socket.on('time', function(data){
-        var time = data.time / 20;
-        time = time * 100;
+        console.log(data)
+        var time = 20 - data.time;
+        // time = time * 100;
         var playerid = data.player;
         var player = players.getPlayer(playerid);
-        player.gameData.score += time;
+        // player.gameData.score += time;
+        player.gameData["timeTaken"] = time
     });
     
     
@@ -427,11 +430,11 @@ io.on('connection', (socket) => {
                                             if(playersInGame[i].gameData.score > second.score){
                                                 if(playersInGame[i].gameData.score > first.score){
                                                     //First Place
-                                                    fifth.name = fourth.name;
-                                                    fifth.score = fourth.score;
+                                                    // fifth.name = fourth.name;
+                                                    // fifth.score = fourth.score;
                                                     
-                                                    fourth.name = third.name;
-                                                    fourth.score = third.score;
+                                                    // fourth.name = third.name;
+                                                    // fourth.score = third.score;
                                                     
                                                     third.name = second.name;
                                                     third.score = second.score;
@@ -443,11 +446,11 @@ io.on('connection', (socket) => {
                                                     first.score = playersInGame[i].gameData.score;
                                                 }else{
                                                     //Second Place
-                                                    fifth.name = fourth.name;
-                                                    fifth.score = fourth.score;
+                                                    // fifth.name = fourth.name;
+                                                    // fifth.score = fourth.score;
                                                     
-                                                    fourth.name = third.name;
-                                                    fourth.score = third.score;
+                                                    // fourth.name = third.name;
+                                                    // fourth.score = third.score;
                                                     
                                                     third.name = second.name;
                                                     third.score = second.score;
@@ -457,16 +460,17 @@ io.on('connection', (socket) => {
                                                 }
                                             }else{
                                                 //Third Place
-                                                fifth.name = fourth.name;
-                                                fifth.score = fourth.score;
+                                                // fifth.name = fourth.name;
+                                                // fifth.score = fourth.score;
                                                     
-                                                fourth.name = third.name;
-                                                fourth.score = third.score;
+                                                // fourth.name = third.name;
+                                                // fourth.score = third.score;
                                                 
                                                 third.name = playersInGame[i].name;
                                                 third.score = playersInGame[i].gameData.score;
                                             }
-                                        }else{
+                                        }
+                                        else{
                                             //Fourth Place
                                             fifth.name = fourth.name;
                                             fifth.score = fourth.score;
@@ -474,7 +478,8 @@ io.on('connection', (socket) => {
                                             fourth.name = playersInGame[i].name;
                                             fourth.score = playersInGame[i].gameData.score;
                                         }
-                                    }else{
+                                    }
+                                    else{
                                         //Fifth Place
                                         fifth.name = playersInGame[i].name;
                                         fifth.score = playersInGame[i].gameData.score;
